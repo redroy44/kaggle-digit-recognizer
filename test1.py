@@ -8,6 +8,7 @@ import matplotlib.cm as cm
 
 from sklearn import cross_validation as cv
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import confusion_matrix
 
 dataset = pd.read_csv("data/train.csv")
 
@@ -34,7 +35,12 @@ print "%.2f%%" %(result * 100)
 
 scores = cv.cross_val_score(rf, train_X, train_Y, cv=5)
 
+#sklearn.learning_curve.learning_curve
+# GridSearchCV
+
 print scores
+
+print confusion_matrix(pred, val_Y)
 
 #np.savetxt('submission_rand_forest.csv', np.c_[range(1,len(test)+1),pred], delimiter=',', header = 'ImageId,Label', comments = '', fmt='%d')
 
