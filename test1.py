@@ -30,7 +30,7 @@ val_X = test.iloc[:, 1:]
 print train_X.shape, train_Y.shape
 print val_X.shape, val_Y.shape
 
-rf = RandomForestClassifier(n_estimators=400, n_jobs=8)
+rf = RandomForestClassifier(n_estimators=100, n_jobs=8)
 rf.fit(train_X, train_Y)
 pred = rf.predict(val_X)
 
@@ -43,12 +43,12 @@ scores = cv.cross_val_score(rf, train_X, train_Y, cv=5)
 #sklearn.learning_curve.learning_curve
 # GridSearchCV
 
-print np.mean(scores)
+mean_score = "%.2f%%" %(np.mean(scores) * 100)
 
 #print confusion_matrix(pred, val_Y)
 
 pred_final = rf.predict(data_test)
-np.savetxt('submission_rand_forest.csv', np.c_[range(1,data_test.shape[0]+1),pred_final], delimiter=',', header = 'ImageId,Label', comments = '', fmt='%d')
+np.savetxt('submission_%.2f.csv' %(mean_score), np.c_[range(1,data_test.shape[0]+1),pred_final], delimiter=',', header = 'ImageId,Label', comments = '', fmt='%d')
 
 print "Script finished"
 
